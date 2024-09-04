@@ -1,0 +1,13 @@
+.text-container-videos {
+  flex: 2;
+  margin-right: 100px;
+  padding-left: 40px;
+}
+
+.container-video {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  justify-content: space-around;
+  margin-top: 55px;
+}
