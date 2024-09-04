@@ -4,16 +4,14 @@ import './styles.css'
 export default function Header() {
     return (
         <header id="cabecalho">
-            <h1>Minha Página HTML - básico</h1>
+            <h1>Projeto Pokedex - API</h1>
             <nav>
                 <ul>
-                    <Link to="/">
-                        <li>Home</li>
-                    </Link>
-
-                    <Link to="/about">
-                        <li>About</li>
-                    </Link>
+                    <li><Link to="/about">Sobre</Link></li>
+                    <li><Link to="/noticia">Notícia</Link></li>
+                    <li><Link to="/videos">Vídeos</Link></li>
+                    <li><Link to="/itens">Itens</Link></li>
+                    <li><Link to="/pokedex">Pokedex</Link></li>
                 </ul>
             </nav>
         </header>
