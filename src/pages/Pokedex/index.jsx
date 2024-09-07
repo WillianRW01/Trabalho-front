@@ -31,7 +31,7 @@ const PokemonList = () => {
   const fetchPokemonDetails = async (url) => {
     const response = await fetch(url);
     const data = await response.json();
-    
+
     return {
       name: data.name,
       image: data.sprites.front_default, // Imagem frontal do Pokémon
