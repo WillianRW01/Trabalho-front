@@ -9,7 +9,7 @@ const ItemList = () => {
   const fetchItemDetails = async (url) => {
     const response = await fetch(url);
     const data = await response.json();
-    
+
     return {
       name: data.name,
       image: data.sprites.default, // Ícone do item
