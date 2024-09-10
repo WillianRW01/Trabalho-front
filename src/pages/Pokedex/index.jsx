@@ -7,25 +7,24 @@ const PokemonList = () => {
   const [filteredPokemons, setFilteredPokemons] = useState([]);
   const [search, setSearch] = useState('');
   const [favorites, setFavorites] = useState([]); 
-  const [selectedPokemon, setSelectedPokemon] = useState(null); 
+  const [expandedPokemon, setExpandedPokemon] = useState(null); // Pokémon clicado para expandir
 
-  // Função para buscar detalhes de cada Pokémon
   const fetchPokemonDetails = async (url) => {
     const response = await fetch(url);
     const data = await response.json();
 
     return {
       name: data.name,
-      image: data.sprites.front_default, // Imagem frontal do Pokémon
+      image: data.sprites.front_default,
       types: data.types
         .map((typeInfo) => typeTranslations[typeInfo.type.name] || typeInfo.type.name)
-        .join(', '), // Tipos do Pokémon traduzidos
+        .join(', '),
       abilities: data.abilities
-        .map((abilityInfo) => abilityInfo.ability.name.replace('-', ' ')) // Remover hífens nas habilidades
-        .join(', '), // Junta as habilidades em uma string
-      height: data.height, // Altura do Pokémon
-      weight: data.weight, // Peso do Pokémon
-      typeArray: data.types.map((typeInfo) => typeTranslations[typeInfo.type.name] || typeInfo.type.name) // Array de tipos
+        .map((abilityInfo) => abilityInfo.ability.name.replace('-', ' '))
+        .join(', '),
+      height: data.height,
+      weight: data.weight,
+      typeArray: data.types.map((typeInfo) => typeTranslations[typeInfo.type.name] || typeInfo.type.name) 
     };
   };
 
@@ -50,29 +49,24 @@ const PokemonList = () => {
     setFilteredPokemons(filtered);
   };
 
-  // Função para alternar entre favorito e não favorito
   const toggleFavorite = (pokemon) => {
-    setFavorites((prevFavorites) =>
-      prevFavorites.includes(pokemon)
-        ? prevFavorites.filter((fav) => fav.name !== pokemon.name)
-        : [...prevFavorites, pokemon]
-    );
+    setFavorites((prevFavorites) => {
+      if (prevFavorites.some((fav) => fav.name === pokemon.name)) {
+        return prevFavorites.filter((fav) => fav.name !== pokemon.name); // Desfavoritar
+      } else {
+        return [pokemon, ...prevFavorites]; // Favoritar e mover para o topo
+      }
+    });
   };
 
-  // Função para determinar a cor de fundo com base no primeiro tipo do Pokémon
   const getBackgroundColor = (types) => {
-    const mainType = types[0]; // Usando o primeiro tipo como principal
-    return typeColors[mainType] || '#FFF'; // Cor padrão se não houver cor associada
+    const mainType = types[0]; 
+    return typeColors[mainType] || '#FFF'; 
   };
 
-  // Função para abrir o modal com detalhes do Pokémon
-  const openModal = (pokemon) => {
-    setSelectedPokemon(pokemon);
-  };
-
-  // Função para fechar o modal
-  const closeModal = () => {
-    setSelectedPokemon(null);
+  // Função para expandir detalhes do Pokémon ao clicar
+  const expandPokemon = (pokemon) => {
+    setExpandedPokemon(expandedPokemon?.name === pokemon.name ? null : pokemon);
   };
 
   return (
@@ -93,81 +87,73 @@ const PokemonList = () => {
             {favorites.map((pokemon, index) => (
               <div 
                 key={index} 
-                className="pokemon-card favorite"
-                style={{ backgroundColor: getBackgroundColor(pokemon.typeArray) }} // Cor de fundo dinâmica
-                onClick={() => openModal(pokemon)}
+                className={`pokemon-card ${expandedPokemon?.name === pokemon.name ? 'expanded' : ''}`} // Adiciona a classe 'expanded' se o Pokémon estiver expandido
+                style={{ backgroundColor: getBackgroundColor(pokemon.typeArray) }} 
+                onClick={() => expandPokemon(pokemon)} // Expande ao clicar
               >
                 <img src={pokemon.image} alt={pokemon.name} />
-                <h3>{pokemon.name}</h3>
-                <p>Tipos: {pokemon.types}</p>
-                <p>Habilidades: {pokemon.abilities}</p>
-                <button
-                  className="favorite-button"
-                  onClick={(e) => {
-                    e.stopPropagation(); 
-                    toggleFavorite(pokemon);
-                  }}
-                  style={{ backgroundColor: 'red' }}
-                >
-                  Desfavoritar
-                </button>
+                <div>
+                  <h3>{pokemon.name}</h3>
+                  {expandedPokemon?.name === pokemon.name && ( // Se expandido, mostra detalhes
+                    <div>
+                      <p>Tipos: {pokemon.types}</p>
+                      <p>Habilidades: {pokemon.abilities}</p>
+                      <p>Altura: {pokemon.height}</p>
+                      <p>Peso: {pokemon.weight}</p>
+                      <button
+                        className="favorite-button"
+                        onClick={(e) => {
+                          e.stopPropagation(); 
+                          toggleFavorite(pokemon);
+                        }}
+                        style={{ backgroundColor: 'red' }}
+                      >
+                        Desfavoritar
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             ))}
           </div>
         </div>
       )}
 
-     
       <div className="pokemon-grid">
         {filteredPokemons
-          .filter((pokemon) => !favorites.includes(pokemon)) 
+          .filter((pokemon) => !favorites.some((fav) => fav.name === pokemon.name)) 
           .map((pokemon, index) => (
             <div 
               key={index} 
-              className="pokemon-card"
+              className={`pokemon-card ${expandedPokemon?.name === pokemon.name ? 'expanded' : ''}`} // Adiciona a classe 'expanded' se o Pokémon estiver expandido
               style={{ backgroundColor: getBackgroundColor(pokemon.typeArray) }} 
-              onClick={() => openModal(pokemon)}
+              onClick={() => expandPokemon(pokemon)} // Expande ao clicar
             >
               <img src={pokemon.image} alt={pokemon.name} />
-              <h3>{pokemon.name}</h3>
-              <p>Tipos: {pokemon.types}</p>
-              <p>Habilidades: {pokemon.abilities}</p>
-              <button
-                className="favorite-button"
-                onClick={(e) => {
-                  e.stopPropagation(); 
-                  toggleFavorite(pokemon);
-                }}
-              >
-                Favoritar
-              </button>
+              <div>
+                <h3>{pokemon.name}</h3>
+                {expandedPokemon?.name === pokemon.name && ( // Se expandido, mostra detalhes
+                  <div>
+                    <p>Tipos: {pokemon.types}</p>
+                    <p>Habilidades: {pokemon.abilities}</p>
+                    <p>Altura: {pokemon.height}</p>
+                    <p>Peso: {pokemon.weight}</p>
+                    <button
+                      className="favorite-button"
+                      onClick={(e) => {
+                        e.stopPropagation(); 
+                        toggleFavorite(pokemon);
+                      }}
+                      style={{ backgroundColor: favorites.some((fav) => fav.name === pokemon.name) ? 'red' : '#ffcc00' }}
+                    >
+                      {favorites.some((fav) => fav.name === pokemon.name) ? 'Desfavoritar' : 'Favoritar'}
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           ))}
       </div>
-
-    
-      {selectedPokemon && (
-        <div className="modal">
-          <div className="modal-background" onClick={closeModal}></div>
-          <div className="modal-content">
-            <h2>{selectedPokemon.name}</h2>
-            <img src={selectedPokemon.image} alt={selectedPokemon.name} />
-            <p>Tipos: {selectedPokemon.types}</p>
-            <p>Habilidades: {selectedPokemon.abilities}</p>
-            <p>Altura: {selectedPokemon.height}</p>
-            <p>Peso: {selectedPokemon.weight}</p>
-            <p>Regiões: {selectedPokemon.locations}</p> 
-            <button
-              className="favorite-button"
-              onClick={() => toggleFavorite(selectedPokemon)}
-              style={{ backgroundColor: favorites.includes(selectedPokemon) ? 'red' : '#ffcc00' }}
-            >
-              {favorites.includes(selectedPokemon) ? 'Desfavoritar' : 'Favoritar'}
-            </button>
-            <button className="close-button" onClick={closeModal}>Fechar</button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
