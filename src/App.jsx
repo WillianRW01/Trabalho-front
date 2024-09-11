@@ -9,6 +9,7 @@ import Pokedex from "./pages/Pokedex";
 import Videos from "./pages/Videos";
 import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
+import Home from "./pages/Home/home";
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                 <Route path='/videos' element={<Videos />} />
                 <Route path='/login' element={<Login/>} />
                 <Route path='/cadastro' element={<Cadastro/>} />
+                <Route path='/home' element={<Home/>} />
             </Routes>
             <Footer />
         </>

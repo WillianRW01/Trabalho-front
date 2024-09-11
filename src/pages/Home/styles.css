@@ -1,0 +1,10 @@
+.container-home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 65vh;
+}
+
+.text-home {
+    color: rgb(196, 0, 0);
+}
