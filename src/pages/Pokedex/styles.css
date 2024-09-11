@@ -25,6 +25,7 @@ body {
   position: relative;
   transition: transform 0.3s, box-shadow 0.3s;
   cursor: pointer;
+  width: 400px;
 }
 
 .pokemon-card img {
