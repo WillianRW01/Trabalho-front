@@ -40,8 +40,11 @@ const ItemList = () => {
 
   return (
     <div>
+      <center>
       <h1>Itens Pokémon</h1>
 
+      </center>
+      
       <input
         type="text"
         placeholder="Pesquisar item..."

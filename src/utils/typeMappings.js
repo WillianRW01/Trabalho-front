@@ -1,6 +1,4 @@
-// typeMappings.js
 
-// Mapeamento de tipos em inglês para português
 export const typeTranslations = {
     normal: "Normal",
     fire: "Fogo",
@@ -22,7 +20,7 @@ export const typeTranslations = {
     fairy: "Fada",
   };
   
-  // Mapeamento de cores para cada tipo de Pokémon
+
   export const typeColors = {
     Normal: "#A8A77A",
     Fogo: "#EE8130",
