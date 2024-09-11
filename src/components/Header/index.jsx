@@ -4,9 +4,11 @@ import './styles.css'
 export default function Header() {
     return (
         <header id="cabecalho">
-            <h1>Projeto Pokedex - API</h1>
+            <h1 className='textTitle'>Projeto Pokedex - API</h1>
             <nav>
                 <ul>
+                    <li><Link to="/cadastro">Cadastro</Link></li>
+                    <li><Link to="/login">Login</Link></li>
                     <li><Link to="/about">Sobre</Link></li>
                     <li><Link to="/noticia">Notícia</Link></li>
                     <li><Link to="/videos">Vídeos</Link></li>

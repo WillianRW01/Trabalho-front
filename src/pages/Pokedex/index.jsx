@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import './styles.css'; 
-import { typeTranslations, typeColors } from './typeMappings'; 
+import PokemonCard from '../../components/PokemonCard/PokemonCard.jsx';
+import SearchBar from '../../components/SearchBar/SearchBar.jsx';
+import FavoriteList from '../../components/FavoriteList/FavoriteList.jsx';
+import { typeTranslations, typeColors } from '../../utils/typeMappings.js';
+import { js } from '@eslint/js';
 
 const PokemonList = () => {
   const [pokemons, setPokemons] = useState([]);
   const [filteredPokemons, setFilteredPokemons] = useState([]);
   const [search, setSearch] = useState('');
   const [favorites, setFavorites] = useState([]); 
-  const [expandedPokemon, setExpandedPokemon] = useState(null); // Pokémon clicado para expandir
+  const [expandedPokemon, setExpandedPokemon] = useState(null);
 
   const fetchPokemonDetails = async (url) => {
     const response = await fetch(url);
     const data = await response.json();
-
     return {
       name: data.name,
       image: data.sprites.front_default,
@@ -24,7 +27,7 @@ const PokemonList = () => {
         .join(', '),
       height: data.height,
       weight: data.weight,
-      typeArray: data.types.map((typeInfo) => typeTranslations[typeInfo.type.name] || typeInfo.type.name) 
+      typeArray: data.types.map((typeInfo) => typeTranslations[typeInfo.type.name] || typeInfo.type.name)
     };
   };
 
@@ -52,9 +55,9 @@ const PokemonList = () => {
   const toggleFavorite = (pokemon) => {
     setFavorites((prevFavorites) => {
       if (prevFavorites.some((fav) => fav.name === pokemon.name)) {
-        return prevFavorites.filter((fav) => fav.name !== pokemon.name); // Desfavoritar
+        return prevFavorites.filter((fav) => fav.name !== pokemon.name); 
       } else {
-        return [pokemon, ...prevFavorites]; // Favoritar e mover para o topo
+        return [pokemon, ...prevFavorites];
       }
     });
   };
@@ -64,96 +67,59 @@ const PokemonList = () => {
     return typeColors[mainType] || '#FFF'; 
   };
 
-  // Função para expandir detalhes do Pokémon ao clicar
   const expandPokemon = (pokemon) => {
     setExpandedPokemon(expandedPokemon?.name === pokemon.name ? null : pokemon);
   };
 
+  const groupPokemonsByType = (pokemons) => {
+    const grouped = {};
+    pokemons.forEach((pokemon) => {
+      const mainType = pokemon.typeArray[0]; 
+      if (!grouped[mainType]) {
+        grouped[mainType] = [];
+      }
+      grouped[mainType].push(pokemon);
+    });
+    return grouped;
+  };
+
+  const groupedPokemons = groupPokemonsByType(filteredPokemons);
+
   return (
     <div>
+      <center>
       <h1>Pokédex</h1>
-
-      <input
-        type="text"
-        placeholder="Pesquisar Pokémon..."
-        value={search}
-        onChange={handleSearch}
-      />
+      </center>
+      <SearchBar search={search} handleSearch={handleSearch} />
 
       {favorites.length > 0 && (
-        <div>
-          <h2>Pokémon Favoritos</h2>
+        <FavoriteList
+          favorites={favorites}
+          expandedPokemon={expandedPokemon}
+          expandPokemon={expandPokemon}
+          toggleFavorite={toggleFavorite}
+          getBackgroundColor={getBackgroundColor}
+        />
+      )}
+
+      {Object.keys(groupedPokemons).map((type) => (
+        <div key={type}>
+          <h2>{type}</h2> 
           <div className="pokemon-grid">
-            {favorites.map((pokemon, index) => (
-              <div 
-                key={index} 
-                className={`pokemon-card ${expandedPokemon?.name === pokemon.name ? 'expanded' : ''}`} // Adiciona a classe 'expanded' se o Pokémon estiver expandido
-                style={{ backgroundColor: getBackgroundColor(pokemon.typeArray) }} 
-                onClick={() => expandPokemon(pokemon)} // Expande ao clicar
-              >
-                <img src={pokemon.image} alt={pokemon.name} />
-                <div>
-                  <h3>{pokemon.name}</h3>
-                  {expandedPokemon?.name === pokemon.name && ( // Se expandido, mostra detalhes
-                    <div>
-                      <p>Tipos: {pokemon.types}</p>
-                      <p>Habilidades: {pokemon.abilities}</p>
-                      <p>Altura: {pokemon.height}</p>
-                      <p>Peso: {pokemon.weight}</p>
-                      <button
-                        className="favorite-button"
-                        onClick={(e) => {
-                          e.stopPropagation(); 
-                          toggleFavorite(pokemon);
-                        }}
-                        style={{ backgroundColor: 'red' }}
-                      >
-                        Desfavoritar
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
+            {groupedPokemons[type].map((pokemon, index) => (
+              <PokemonCard
+                key={index}
+                pokemon={pokemon}
+                expandedPokemon={expandedPokemon}
+                expandPokemon={expandPokemon}
+                toggleFavorite={toggleFavorite}
+                favorites={favorites}
+                getBackgroundColor={getBackgroundColor}
+              />
             ))}
           </div>
         </div>
-      )}
-
-      <div className="pokemon-grid">
-        {filteredPokemons
-          .filter((pokemon) => !favorites.some((fav) => fav.name === pokemon.name)) 
-          .map((pokemon, index) => (
-            <div 
-              key={index} 
-              className={`pokemon-card ${expandedPokemon?.name === pokemon.name ? 'expanded' : ''}`} // Adiciona a classe 'expanded' se o Pokémon estiver expandido
-              style={{ backgroundColor: getBackgroundColor(pokemon.typeArray) }} 
-              onClick={() => expandPokemon(pokemon)} // Expande ao clicar
-            >
-              <img src={pokemon.image} alt={pokemon.name} />
-              <div>
-                <h3>{pokemon.name}</h3>
-                {expandedPokemon?.name === pokemon.name && ( // Se expandido, mostra detalhes
-                  <div>
-                    <p>Tipos: {pokemon.types}</p>
-                    <p>Habilidades: {pokemon.abilities}</p>
-                    <p>Altura: {pokemon.height}</p>
-                    <p>Peso: {pokemon.weight}</p>
-                    <button
-                      className="favorite-button"
-                      onClick={(e) => {
-                        e.stopPropagation(); 
-                        toggleFavorite(pokemon);
-                      }}
-                      style={{ backgroundColor: favorites.some((fav) => fav.name === pokemon.name) ? 'red' : '#ffcc00' }}
-                    >
-                      {favorites.some((fav) => fav.name === pokemon.name) ? 'Desfavoritar' : 'Favoritar'}
-                    </button>
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
-      </div>
+      ))}
     </div>
   );
 };
