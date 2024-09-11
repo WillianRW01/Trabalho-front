@@ -11,7 +11,7 @@ header {
 }
 
 header a {
-    color: #fff;
+    color: #bb0000;
     text-decoration: none;
     padding: 10px 20px;
     background-color: #bb0000;
@@ -38,6 +38,10 @@ nav ul {
 
 nav ul li {
     margin: 0 15px;
+}
+
+.textTitle{
+    color: #fff;
 }
 
 nav ul li a {
