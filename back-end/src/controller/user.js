@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt')
 const salts = 12;
 class UserController {
 
-    async createUser(name, email, password) {
+    async createUser(name, email, password,role) {
         if (!name || !email || !password) {
             throw new Error("Name, email e password são obrigatórios.")
         }
@@ -16,6 +16,7 @@ class UserController {
             name,
             email,
             password,
+            role
         })
         return userValue;
     }
