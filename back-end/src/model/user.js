@@ -22,6 +22,10 @@ class UserModel {
                 password: {
                     type: database.db.Sequelize.STRING,
                     allowNull: false
+                },
+                role: {
+                    type: database.db.Sequelize.ENUM('admin', 'viewer'),
+                    allowNull: false
                 }
             })
         }
