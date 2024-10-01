@@ -15,38 +15,43 @@ class UserApi {
     }
 
     createUser(req, res) {
+        const { name, email, password } = req.body
         try {
-            UserController.user(nome, email, senha, 'viewer')
-            res.send('post');
+            UserController.createUser(name, email, password, 'viewer')
+            res.send('Usuario criado com sucesso!');
         } catch (e) {
             console.log(e)
             res.status(400).send('Deu erro')
         }
     }
 
-
     updateUser(req, res) {
+        const { id } = req.params;
+        const { nome, email, senha } = req.body;
+
         try {
-            UserController.user(nome, email, senha)
-            res.send('post');
+            UserController.updateUser(id, { nome, email, senha });
+            res.send('Usuario alterado com sucesso!');
         } catch (e) {
-            console.log(e)
-            res.status(400).send('Deu erro')
+            console.log(e);
+            res.status(400).send('An error occurred');
         }
     }
 
 
     deleteUser(req, res) {
+        const { id } = req.params;
         try {
-            UserController.user(nome, email, senha)
-            res.send('delete');
+            UserController.deleteUser(id);
+            res.send('Usuario deletado com sucesso!');
         } catch (e) {
-            console.log(e)
-            res.status(400).send('Deu erro')
+            console.log(e);
+            res.status(400).send('An error occurred');
         }
     }
 
     createUserAdmin(req, res) {
+        const { nome, email, senha } = req.body
         try {
             UserController.user(nome, email, senha, 'admin')
             res.send('post');
@@ -58,23 +63,27 @@ class UserApi {
 
 
     updateUserAdmin(req, res) {
+        const { id } = req.params;
+        const { nome, email, senha } = req.body;
+
         try {
-            UserController.user(nome, email, senha)
-            res.send('post');
+            UserController.updateUser(id, { nome, email, senha });
+            res.send('Usuario Admin alterado com sucesso!');
         } catch (e) {
-            console.log(e)
-            res.status(400).send('Deu erro')
+            console.log(e);
+            res.status(400).send('An error occurred');
         }
     }
 
 
     deleteUserAdmin(req, res) {
+        const { id } = req.params;
         try {
-            UserController.user(nome, email, senha)
-            res.send('delete');
+            UserController.deleteUser(id);
+            res.send('Usuario Admin deletado com sucesso!');
         } catch (e) {
-            console.log(e)
-            res.status(400).send('Deu erro')
+            console.log(e);
+            res.status(400).send('An error occurred');
         }
     }
 

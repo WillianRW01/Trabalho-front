@@ -12,7 +12,7 @@ class UserController {
 
         const passwordHashed = bcrypt.hash(password, salts)
 
-        const userValue = await user.create({
+        const userValue = await UserModel.create({
             name,
             email,
             password,
@@ -21,6 +21,33 @@ class UserController {
         return userValue;
     }
 
+    async updateUser(id, { name, email, password, role }) {
+        const user = await user.findById(id);
+        if (!user) {
+            throw new Error("Usuário não encontrado.");
+        }
+    
+        if (password) {
+            const passwordHashed = await bcrypt.hash(password, salts);
+            user.password = passwordHashed;
+        }
+    
+        if (name) user.name = name;
+        if (email) user.email = email;
+        if (role) user.role = role;
+    
+        const updatedUser = await user.save();
+        return updatedUser;
+    }
+
+    async deleteUser(id) {
+        const user = await user.findByIdAndDelete(id);
+        if (!user) {
+            throw new Error("Usuário não encontrado.");
+        }
+        return user;
+    }    
+    
     findAll() {
         return user.findAll();
     }

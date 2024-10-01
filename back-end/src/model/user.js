@@ -9,7 +9,7 @@ class UserModel {
                     autoIncrement: true,
                     primaryKey: true
                 },
-                nome: {
+                name: {
                     type: database.db.Sequelize.STRING,
                     allowNull: false
                 },

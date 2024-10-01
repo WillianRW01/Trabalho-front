@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken')
+const user = require('../controller/user')
 
 function authMiddleware(roles = []) {
     return (req, res, next) => {
