@@ -7,13 +7,12 @@ function authMiddleware(roles = []) {
         console.log
 
         if (!token) {
-
-            res.status(500) > json("Usuário não está logado")
+           return res.status(500).json({ msg: "Usuário não está logado"})
         }
 
         jwt.verify(token, 'MeuSegredo123!', (err, decoded) => {
             if (err) {
-                return res.status(500).json("Usuário não está logado")
+                return res.status(500).json({ msg: "Usuário não está logado"})
 
             }
 
