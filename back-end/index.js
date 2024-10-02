@@ -1,6 +1,6 @@
 const express = require('express');
-const useRouter = require('./src/router/user');
-const pokemonRouter = require('./src/router/pokemon'); // Importar as rotas de Pokémon
+const useRouter = require('./src/routes/user');
+const pokemonRouter = require('./src/routes/pokemon'); // Importar as rotas de Pokémon
 const database = require('./src/config/database');
 
 const app = express();
@@ -11,7 +11,7 @@ app.use("/api/v1/user", useRouter);
 app.use("/api/v1", pokemonRouter); 
 
 database.db
-    .sync({ force: false })
+    .sync({ force: true })
     .then((_) => {
         app.listen(3000, () => {
             console.log("Servidor rodando na porta 3000");
