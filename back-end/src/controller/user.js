@@ -1,75 +1,81 @@
-const UserModel = require('../model/user')
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt')
+const UserModel = require('../model/user');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const salts = 12;
 class UserController {
 
-    async createUser(name, email, password,role) {
-        if (!name || !email || !password) {
-            throw new Error("Name, email e password são obrigatórios.")
+    async createUser(name, email, senha, role) {
+        if (!name || !email || !senha) {
+            throw new Error("Name, email e senha são obrigatórios.");
         }
 
-        const passwordHashed = bcrypt.hash(password, salts)
+        const passwordHashed = await bcrypt.hash(senha, salts);
 
         const userValue = await UserModel.create({
             name,
             email,
-            password,
+            senha: passwordHashed, 
             role
-        })
+        });
         return userValue;
     }
+    async findUser(id) { 
+        return UserModel.findByPk(id); 
+    }
 
-    async updateUser(id, { name, email, password, role }) {
-        const user = await user.findById(id);
+
+    async updateUser(id, { name, email, senha, role }) {
+        const user = await UserModel.findByPk(id); 
         if (!user) {
             throw new Error("Usuário não encontrado.");
         }
-    
-        if (password) {
-            const passwordHashed = await bcrypt.hash(password, salts);
-            user.password = passwordHashed;
+
+        if (senha) {
+            const senhaHashed = await bcrypt.hash(senha, salts);
+            user.senha = senhaHashed;
         }
-    
+
         if (name) user.name = name;
         if (email) user.email = email;
         if (role) user.role = role;
-    
+
         const updatedUser = await user.save();
         return updatedUser;
     }
 
     async deleteUser(id) {
-        const user = await user.findByIdAndDelete(id);
+        const user = await UserModel.findByIdAndDelete(id);
         if (!user) {
             throw new Error("Usuário não encontrado.");
         }
         return user;
-    }    
-    
-    findAll() {
-        return user.findAll();
     }
 
-    async login(email, password) {
-        const userLogged = await user.findOne({ where: { email }});
 
-        if(!userLogged) {
-            throw new Error("Email ou senha inválido. Tente novamente!")
+    async findAll() {
+        return UserModel.findAll();
+    }
+
+    async login(email, senha) {
+        const userLogged = await UserModel.findOne({ where: { email } });
+    
+        if (!userLogged) {
+            throw new Error("Email ou senha inválido. Tente novamente!");
         }
-
-        const validPassword = userLogged.password === password;
-        
-        if(!validPassword) {
-            throw new Error("Email ou senha inválido. Tente novamente!")
+    
+    
+        const validPassword = await bcrypt.compare(senha, userLogged.senha);
+    
+        if (!validPassword) {
+            throw new Error("Email ou senha inválido. Tente novamente!");
         }
-
-        return jwt.sign({ id: userLogged.id, email: userLogged.email },
+    
+        return jwt.sign(
+            { id: userLogged.id, email: userLogged.email },
             'MeuSegredo123!'
-
-        )
+        );
     }
 }
 
-module.exports = new UserController;
+module.exports = new UserController();
