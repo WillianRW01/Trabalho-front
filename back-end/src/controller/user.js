@@ -76,6 +76,21 @@ class UserController {
             'MeuSegredo123!'
         );
     }
+    async BloquearUser(id){
+        const userValue = await this.findUser(id);
+        userValue.status = 'bloqueado';
+        await userValue.save();
+        return userValue;
+    }
+
+    async DesbloquearUser(id){
+        const userValue = await this.findUser(id);
+        userValue.status = 'ativo';
+        await userValue.save();
+        return userValue;
+    }
+    
+
 }
 
 module.exports = new UserController();
