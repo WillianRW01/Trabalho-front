@@ -16,4 +16,7 @@ useRouter.put('/admin/:id', authMiddleware(['admin']), UserApi.updateUserAdmin);
 useRouter.delete('/:id', authMiddleware(), UserApi.deleteUser);
 useRouter.delete('/admin/:id', authMiddleware(['admin']), UserApi.deleteUserAdmin); 
 
+useRouter.post('/BloquearUser/:id', authMiddleware(['admin']), UserApi.BloquearUser)
+useRouter.post('/DesbloquerUser/:id', authMiddleware(['admin']), UserApi.DesbloquearUser)
+
 module.exports = useRouter;

@@ -4,6 +4,7 @@ const useRouter = require('./src/routes/user');
 const pokemonRouter = require('./src/routes/pokemon'); 
 const database = require('./src/config/database');
 const UserApi = require('./src/api/user');
+
 const app = express();
 
 app.use(express.json()); 
