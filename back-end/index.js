@@ -1,16 +1,20 @@
 const express = require('express');
-
+const cors = require("cors");
+const authMiddleware = require("../scr/")
 const useRouter = require('./src/routes/user');
 const pokemonRouter = require('./src/routes/pokemon'); 
 const database = require('./src/config/database');
+const  authMiddleware = require('./src/Middleware/auth');
 const UserApi = require('./src/api/user');
-
 const app = express();
 
-app.use(express.json()); 
-app.post("/api/v1/user/login", UserApi.login); 
+app.use(express.json());
+app.use(cors()) 
 
-app.use("/api/v1/user", useRouter); 
+app.post("/api/v1/user/login", UserApi.login); 
+app.post("/api/v1/user", UserApi.createUser);
+
+app.use("/api/v1/user",authMiddleware(), useRouter); 
 app.use("/api/v1/pokemon", pokemonRouter);  
 
 database.db
