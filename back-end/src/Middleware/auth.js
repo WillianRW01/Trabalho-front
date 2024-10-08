@@ -3,20 +3,20 @@ const user = require('../controller/user')
 
 function authMiddleware(roles = []) {
     return (req, res, next) => {
-        const token = req.header["authorization"]
+        const token = req.headers["authorization"]
         console.log
 
         if (!token) {
            return res.status(500).json({ msg: "Usuário não está logado"})
         }
 
-        jwt.verify(token, 'MeuSegredo123!', (err, decoded) => {
+        jwt.verify(token, 'MeuSegredo123!', async (err, decoded) => {
             if (err) {
                 return res.status(500).json({ msg: "Usuário não está logado"})
 
             }
 
-            const userLogger = user.findUser(decoded.id)
+            const userLogger =  await user.findUser(decoded.id)
             if (!userLogger) {
                 return res.status(500).json("USUÁRIO NÃO ENCONTRADO")
             }
@@ -25,6 +25,7 @@ function authMiddleware(roles = []) {
             }
 
             req.session = decoded
+            console.log(decoded)
 
             next()
         })

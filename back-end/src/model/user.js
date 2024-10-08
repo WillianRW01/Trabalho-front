@@ -19,7 +19,7 @@ class UserModel {
                     allowNull: false,
                     unique: true
                 },
-                password: {
+                senha: {
                     type: database.db.Sequelize.STRING,
                     allowNull: false
                 },
