@@ -8,12 +8,12 @@ useRouter.post('/login', UserApi.login)
 useRouter.get('/', authMiddleware(['admin', 'viewer']), UserApi.findUser);
 
 useRouter.post('/', UserApi.createUser);
-useRouter.post('/admin', authMiddleware(['admin']), UserApi.createUserAdmin); //CREATE USER E ADMIN
+useRouter.post('/admin', authMiddleware(['admin']), UserApi.createUserAdmin); 
 
-useRouter.put('/:id', UserApi.updateUser);
-useRouter.put('/admin/:id', authMiddleware(['admin']), UserApi.updateUserAdmin); //UPDATE USER E ADMIN
+useRouter.put('/', authMiddleware(), UserApi.updateUser);
+useRouter.put('/admin/:id', authMiddleware(['admin']), UserApi.updateUserAdmin);
 
-useRouter.delete('/:id', UserApi.deleteUser);
-useRouter.delete('/admin/:id', authMiddleware(['admin']), UserApi.deleteUserAdmin); //DELETE USER E ADMIN
+useRouter.delete('/:id', authMiddleware(), UserApi.deleteUser);
+useRouter.delete('/admin/:id', authMiddleware(['admin']), UserApi.deleteUserAdmin); 
 
 module.exports = useRouter;
