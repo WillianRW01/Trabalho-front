@@ -26,7 +26,12 @@ class UserModel {
                 role: {
                     type: database.db.Sequelize.ENUM('admin', 'viewer'),
                     allowNull: false
+                },
+                status:{
+                    type:database.db.Sequelize.ENUM("ativo","bloqueado"),
+                    defaultValue:"ativo",
                 }
+
             })
         }
 
