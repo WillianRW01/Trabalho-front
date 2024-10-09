@@ -9,14 +9,17 @@ import Pokedex from "./pages/Pokedex";
 import Videos from "./pages/Videos";
 import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
+import { AuthProvider } from "./auth/Context";
+import PrivateRoute from "./routes/PrivateRoute";
 
 function App() {
     return (
-        <>
+        <AuthProvider>
             <Header />
 
             <Routes>
                 {/* <Route path='/' element={<ApiRickAndMorty />} /> */}
+                <Route element={<PrivateRoute />} /*COLOCAR ROTAS PRIVADAS AQUI*//>
                 <Route path='/about' element={<About />} />
                 <Route path='/itens' element={<Itens />} />
                 <Route path='/noticia' element={<Noticia />} />
@@ -26,7 +29,7 @@ function App() {
                 <Route path='/cadastro' element={<Cadastro/>} />
             </Routes>
             <Footer />
-        </>
+        </AuthProvider>
     );
 }
 
