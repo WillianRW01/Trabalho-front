@@ -14,6 +14,7 @@ class UserApi {
 
     async createUser(req, res) {
         const { name, email, senha } = req.body;
+        console.log(req.body)
         try {
             await UserController.createUser(name, email, senha, 'viewer');
             res.send('Usuario criado com sucesso!');
