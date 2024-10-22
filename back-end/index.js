@@ -16,8 +16,7 @@ app.get("/", (req, res) => {
  
 app.post("/api/v1/user/login", UserApi.login);
 app.post("/api/v1/user", UserApi.createUser);
- 
-app.use("/api/v1/user",authMiddleware(), useRouter);
+app.use("/api/v1/user",authMiddleware(), useRouter); 
 app.use("/api/v1/pokemon", pokemonRouter);  
  
 database.db
