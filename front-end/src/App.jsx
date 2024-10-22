@@ -1,3 +1,4 @@
+
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Footer from "./components/Footer";
@@ -9,6 +10,7 @@ import Pokedex from "./pages/Pokedex";
 import Videos from "./pages/Videos";
 import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
+import Perfil from "./pages/Perfil"; 
 import { AuthProvider } from "./auth/Context";
 import PrivateRoute from "./routes/PrivateRoute";
 
@@ -18,16 +20,19 @@ function App() {
             <Header />
 
             <Routes>
-                {/* <Route path='/' element={<ApiRickAndMorty />} /> */}
-                <Route element={<PrivateRoute />} /*COLOCAR ROTAS PRIVADAS AQUI*//>
-                <Route path='/about' element={<About />} />
-                <Route path='/itens' element={<Itens />} />
-                <Route path='/noticia' element={<Noticia />} />
-                <Route path='/pokedex' element={<Pokedex />} />
-                <Route path='/videos' element={<Videos />} />
-                <Route path='/login' element={<Login/>} />
-                <Route path='/cadastro' element={<Cadastro/>} />
+                <Route element={<PrivateRoute />}>
+                    <Route path='/about' element={<About />} />
+                    <Route path='/itens' element={<Itens />} />
+                    <Route path='/noticia' element={<Noticia />} />
+                    <Route path='/pokedex' element={<Pokedex />} />
+                    <Route path='/videos' element={<Videos />} />
+                    <Route path='/perfil' element={<Perfil />} /> 
+                </Route>
+
+                <Route path='/login' element={<Login />} />
+                <Route path='/cadastro' element={<Cadastro />} />
             </Routes>
+
             <Footer />
         </AuthProvider>
     );
