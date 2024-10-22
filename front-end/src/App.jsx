@@ -27,6 +27,7 @@ function App() {
                 <Route path='/videos' element={<Videos />} />
                 <Route path='/login' element={<Login/>} />
                 <Route path='/cadastro' element={<Cadastro/>} />
+                <Route path='/criarpokemon' element={<Cadastrar/>} />
             </Routes>
             <Footer />
         </AuthProvider>
