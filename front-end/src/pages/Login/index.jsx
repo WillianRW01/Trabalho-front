@@ -1,29 +1,69 @@
-import './styles.css';
-import React from 'react';
+import { useContext, useState } from 'react';
+import './styles.css'
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../auth/Context';
+import { loginUser } from '../../api/user';
 
 export default function Login() {
-    return (
-        <div id="loginpage" className="login-container">
-            <h1>Login</h1>
-            <form className="login-form">
-                <label htmlFor="email">Email:</label>
-                <input
-                    type="text"
-                    id="email"
-                    placeholder="Digite seu email"
-                    required
-                />
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-                <label htmlFor="password">Senha:</label>
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Digite sua senha"
-                    required
-                />
+  const handleBackClick = () => {
+    navigate('/');
+  };
 
-                <button type="submit" className="login-button">Entrar</button>
-            </form>
+  const handleCreateAccount = () => {
+    navigate('/signup')
+  }
+
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!email || !senha) {
+        return alert('Informe o e-mail e a senha para continuar!');
+    }
+
+    try {
+        // 7 - Usar Axios para fazer a requisição de login
+        const response = await loginUser(email, senha);
+        if (response.token) {
+            // 8 - Adicionar login ao AuthContext
+            login(response.token);
+            return navigate('/');
+        }
+    } catch (error) {
+        console.log(error)
+        if (error.response.status === 403) {
+          return alert("Sem permissão.");
+        }
+        if (error.response.status === 401 || error.response.status === 404) {
+          return alert('Email ou senha inválido, tente novamente!');
+        }
+        return alert('Erro inesperado, tente novamente mais tarde!');
+    }
+  };
+
+  return (
+    <div className="login-container">
+      <form className="login-form">
+        <h2>Login</h2>
+        <div className="input-group">
+          <label htmlFor="email">Email:</label>
+          <input type="text" id="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
-    );
+        <div className="input-group">
+          <label htmlFor="senha">Senha:</label>
+          <input type="password" id="senha" required value={senha} onChange={(e) => setSenha(e.target.value)}/>
+        </div>
+        <p>Não possui conta? <spam className="signup" onClick={handleCreateAccount}>Cadastre-se</spam></p>
+        <button className="button" type="submit" onClick={handleSubmit}>Entrar</button>
+        <button className="button back-button" onClick={handleBackClick}>
+          Voltar
+        </button>
+      </form>
+    </div>
+  );
 }

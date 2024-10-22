@@ -40,6 +40,7 @@ export const getUsers = async () => {
     return response.data
 }
 export const loginUser = async (email, password) => {
-    const response = await api.put(`api/v1/login`, body)
+    const response = await api.post(`api/v1/user/login`,{ email, senha:password})
+    console.log(response)
     return response.data
 }
