@@ -21,7 +21,7 @@ app.use("/api/v1/user",authMiddleware(), useRouter);
 app.use("/api/v1/pokemon", pokemonRouter);  
  
 database.db
-    .sync({ force: false })
+    .sync({ force:false })
     .then((_) => {
         app.listen(3000, () => {
             console.log("Servidor rodando na porta 3000");

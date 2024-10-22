@@ -16,7 +16,7 @@ class UserController {
             name,
             email,
             senha: passwordHashed, 
-            role
+            role,
         });
         return userValue;
     }
