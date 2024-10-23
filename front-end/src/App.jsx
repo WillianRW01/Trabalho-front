@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
 import { AuthProvider } from "./auth/Context";
 import PrivateRoute from "./routes/PrivateRoute";
+import Cadastrar from "./pages/CriarPokemon";
 
 function App() {
     return (
