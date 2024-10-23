@@ -4,7 +4,6 @@ const authMiddleware = require('../Middleware/auth');
  
 const useRouter = express.Router();
  
-useRouter.post('/login', UserApi.login)
 useRouter.get('/', authMiddleware(['admin', 'viewer']), UserApi.findUser);
  
 useRouter.post('/admin', authMiddleware(['admin']), UserApi.createUserAdmin);

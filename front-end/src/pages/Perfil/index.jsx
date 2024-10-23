@@ -1,6 +1,20 @@
-import './styles.css'
+import { useState } from 'react';
+import './styles.css';
 
-export default function Profile({ nome, email, isUpdate, handleClickDelete, handleClickUpdate, handleSaveUpdate, setIsUpdate, updNome, setUpdNome, updEmail, setUpdEmail }) {
+export default function Profile({ nome, email, handleClickDelete }) {
+  const [isUpdate, setIsUpdate] = useState(false); // controle de edição
+  const [updNome, setUpdNome] = useState(nome);    // nome atualizado
+  const [updEmail, setUpdEmail] = useState(email); // email atualizado
+
+  const handleClickUpdate = () => {
+    setIsUpdate(true); // ativa o modo de edição
+  };
+
+  const handleSaveUpdate = () => {
+    // Aqui você pode adicionar uma lógica para salvar os dados atualizados
+    setIsUpdate(false); // sai do modo de edição
+  };
+
   return (
     <div className='profile'>
       <div className='info'>
@@ -20,5 +34,5 @@ export default function Profile({ nome, email, isUpdate, handleClickDelete, hand
         }
       </div>
     </div>
-  )
+  );
 }

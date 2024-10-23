@@ -3,6 +3,13 @@
     justify-content: center;
     align-items: center;
 }
+.avatar {
+    width: 100px; /* Ajuste o tamanho */
+    height: 100px; /* Ajuste o tamanho */
+    border-radius: 50%; /* Para deixar a imagem circular */
+    margin-bottom: 20px; /* Adiciona espaço abaixo da imagem */
+  }
+  
 .profile .info{
     padding: 25px;
     background-color: #FFF;
