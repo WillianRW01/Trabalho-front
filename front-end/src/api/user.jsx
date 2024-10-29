@@ -1,10 +1,5 @@
 import api from './api'
 
-//6 funções
-
-// user = {name, email, password}
-// user = {name, email, password}
-
 export const createUser = async (user) => {
     const response = await api.post('api/v1/user', user)
     return response.data
@@ -25,10 +20,13 @@ export const updateUserAdmin = async (id, user) => {
     return response.data
 }
 
-export const deleteUser = async (id) => {}
+export const deleteUser = async (id) => {
+    return api.delete(`/api/v1/user/${id}`)
+}
 
 export const deleteUserAdmin = async (id) => {
     return api.delete(`/api/v1/user/${id}`)
+
 }
 
 export const getUserByid = async (id) => {
