@@ -1,33 +1,17 @@
-import React from 'react';  // Import deve estar fora do JSX
-import './PokemonCard.css'; // Estilos do componente
+import React from 'react';
+import './PokemonCard.css';
 
-const PokemonCard = ({ pokemon, expandedPokemon, expandPokemon, toggleFavorite, favorites, getBackgroundColor }) => (
-  <div 
-    className={`pokemon-card ${expandedPokemon?.name === pokemon.name ? 'expanded' : ''}`}
-    style={{ backgroundColor: getBackgroundColor(pokemon.typeArray) }} 
-    onClick={() => expandPokemon(pokemon)}
-  >
-    <img src={pokemon.image} alt={pokemon.name} />
+const PokemonCard = ({ pokemon, onEdit, onDelete }) => (
+  
+  <div className="pokemon-card">
+    <img src={pokemon.image} alt={pokemon.nome} />
     <div>
-      <h3>{pokemon.name}</h3>
-      {expandedPokemon?.name === pokemon.name && ( 
-        <div>
-          <p>Tipos: {pokemon.types}</p>
-          <p>Habilidades: {pokemon.abilities}</p>
-          <p>Altura: {pokemon.height}</p>
-          <p>Peso: {pokemon.weight}</p>
-          <button
-            className="favorite-button"
-            onClick={(e) => {
-              e.stopPropagation(); 
-              toggleFavorite(pokemon);
-            }}
-            style={{ backgroundColor: favorites.some((fav) => fav.name === pokemon.name) ? 'red' : '#ffcc00' }}
-          >
-            {favorites.some((fav) => fav.name === pokemon.name) ? 'Desfavoritar' : 'Favoritar'}
-          </button>
-        </div>
-      )}
+      <h3>{pokemon.nome}</h3>
+      <p>Tipos: {pokemon.tipo}</p>
+      <p>Habilidades: {pokemon.abilities}</p>
+      <p>Peso: {pokemon.peso}</p>
+      <button onClick={() => onEdit(pokemon)}>Editar</button>
+      <button onClick={() => onDelete(pokemon.id)}>Excluir</button>
     </div>
   </div>
 );

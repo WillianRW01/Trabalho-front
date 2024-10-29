@@ -14,6 +14,7 @@ export default function Header() {
                     <li><Link to="/videos">Vídeos</Link></li>
                     <li><Link to="/itens">Itens</Link></li>
                     <li><Link to="/pokedex">Pokedex</Link></li>
+                    <li><Link to="/perfil">Perfil</Link></li>
                 </ul>
             </nav>
         </header>
