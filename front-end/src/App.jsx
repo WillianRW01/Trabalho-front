@@ -29,7 +29,7 @@ function App() {
                     <Route path='/videos' element={<Videos />} />
                     <Route path='/perfil' element={<Perfil />} />
                     
-                    <Route path='/pokedex/new' element={<PokemonForm />} /> 
+                    <Route path='/pokemon/new' element={<PokemonForm />} /> 
                     <Route path='/pokedex/:id' element={<PokemonForm />} /> 
                 </Route>
 

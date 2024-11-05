@@ -14,12 +14,12 @@ export const deletarPokemon = async (id) => {
   await api.delete(`api/v1/pokemon/${id}`);
 };
 
-export const buscarPokemonPorId = async (id) => {
+export const listarPokemonPorId = async (id) => {
   const response = await api.get(`api/v1/pokemon/${id}`);
   return response.data;
 };
 
-export const listarPokemons = async (page = 1) => {
+export const listarPokemons = async (page = 63) => {
   const response = await api.get('api/v1/pokemon', {
     params: { page },
   });

@@ -4,6 +4,7 @@ class PokemonApi {
   async criarPokemon(req, res) {
     const { nome, tipo, habilidade, peso } = req.body;
 
+    console.log(req.body)
     try {
       const novoPokemon = await controller.criarPokemon(nome, tipo, habilidade, peso);
       return res.status(201).send(novoPokemon);
