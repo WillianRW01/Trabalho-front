@@ -19,7 +19,7 @@ export const listarPokemonPorId = async (id) => {
   return response.data;
 };
 
-export const listarPokemons = async (page = 63) => {
+export const listarPokemons = async (page = 1) => {
   const response = await api.get('api/v1/pokemon', {
     params: { page },
   });

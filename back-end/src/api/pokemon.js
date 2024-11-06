@@ -2,16 +2,16 @@ const controller = require('../controller/Pokemon');
 
 class PokemonApi {
   async criarPokemon(req, res) {
-    const { nome, tipo, habilidade, peso } = req.body;
-
-    console.log(req.body)
+    const { nome, tipo, habilidade, peso, imagem } = req.body;
+  
     try {
-      const novoPokemon = await controller.criarPokemon(nome, tipo, habilidade, peso);
+      const novoPokemon = await controller.criarPokemon(nome, tipo, habilidade, peso, imagem);
       return res.status(201).send(novoPokemon);
     } catch (error) {
       return res.status(400).send({ error: `Erro ao criar Pokémon: ${error.message}` });
     }
   }
+  
 
   async alterarPokemon(req, res) {
     const { id } = req.params;

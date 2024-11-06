@@ -73,7 +73,8 @@ class UserController {
     
         return jwt.sign(
             { id: userLogged.id, email: userLogged.email },
-            'MeuSegredo123!'
+            'MeuSegredo123!',
+            { expiresIn: 60 * 60}
         );
     }
     async BloquearUser(id){
