@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './styles.css';
 import PokemonCard from '../../components/PokemonCard/PokemonCard.jsx';
 import SearchBar from '../../components/SearchBar/SearchBar.jsx';
-import { listarPokemons, deletarPokemon } from '../../api/pokemon.jsx';
+import { alterarPokemon, listarPokemons, deletarPokemon } from '../../api/pokemon.jsx';
 
 const PokemonList = () => {
   const [pokemons, setPokemons] = useState([]);

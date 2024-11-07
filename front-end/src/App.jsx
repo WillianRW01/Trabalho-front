@@ -30,7 +30,7 @@ function App() {
                     <Route path='/perfil' element={<Perfil />} />
                     
                     <Route path='/pokemon/new' element={<PokemonForm />} /> 
-                    <Route path='/pokedex/:id' element={<PokemonForm />} /> 
+                    <Route path='/pokemon/edit' element={<PokemonForm />} /> 
                 </Route>
 
                 <Route path='/login' element={<Login />} />

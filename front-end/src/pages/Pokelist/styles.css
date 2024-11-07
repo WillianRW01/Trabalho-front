@@ -58,3 +58,24 @@ body {
   opacity: 0.8;
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  padding: 10px 20px;
+  margin: 0 5px;
+  background-color: #ff0000;
+  color: #fc0000;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+

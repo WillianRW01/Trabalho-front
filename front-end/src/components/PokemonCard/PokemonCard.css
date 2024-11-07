@@ -1,15 +1,82 @@
 .pokemon-card {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  .pokemon-card img {
-    width: 100px;
-    height: 100px;
-  }
-  .pokemon-card.expanded {
-    background-color: #f0f0f0;
-  }
-  
+  border: 1px solid #ccc;
+  border-radius: 8px; /* Add rounded corners */
+  padding: 16px; /* Increase padding for a more spacious layout */
+  margin: 12px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add shadow and transform effects */
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.pokemon-card:hover {
+  transform: scale(1.05); /* Slightly enlarge on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+}
+
+.pokemon-card img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%; /* Make image circular */
+  margin-bottom: 8px; /* Space between image and text */
+}
+
+.pokemon-card.expanded {
+  background-color: #f9f9f9; /* Lighter background when expanded */
+}
+
+.pokemon-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.pokemon-details {
+  font-size: 14px;
+  color: #666;
+}
+
+.button-container {
+  display: flex;
+  gap: 8px; /* Space between buttons */
+  margin-top: 12px; /* Space above buttons */
+}
+
+.button-container button {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button-container button:hover {
+  background-color: #c0392b; /* Darker red on hover */
+}
+
+.pokemon-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  background-color: #fff;
+}
+
+.pokemon-image {
+  width: 100px;
+  height: auto;
+  margin-bottom: 8px;
+}
+
+.pokemon-card h2 {
+  font-size: 1.5em;
+  margin: 8px 0;
+}

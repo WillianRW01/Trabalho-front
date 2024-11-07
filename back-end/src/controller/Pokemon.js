@@ -42,7 +42,7 @@ class PokemonController {
   }
   
   async listarPokemons(page = 1) {
-    const limit = 20;
+    const limit = 50;
     const offset = (page - 1) * limit;
     const { count, rows: pokemons } = await Pokemon.findAndCountAll({ limit, offset });
 
@@ -57,7 +57,7 @@ class PokemonController {
         }
 
         const data = await response.json();
-        if (!data.next || currentPage >=2) {
+        if (!data.next || currentPage >=3) {
           hasMore = false;
         }
 
