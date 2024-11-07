@@ -79,3 +79,41 @@ body {
   cursor: not-allowed;
 }
 
+.pagination-container {
+  margin-bottom: 20px; 
+}
+
+button {
+  background-color: red;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+.pagination-container {
+  margin-bottom: 40px; /* Ajusta o espaçamento em relação ao footer */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px; /* Espaçamento entre os elementos de paginação */
+}
+
+.pagination-container button {
+  width: 150px; /* Define uma largura fixa para os botões */
+  padding: 8px 0;
+  background-color: #ff0000; /* Mantenha o mesmo fundo */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.pagination-container span {
+  font-weight: bold;
+}

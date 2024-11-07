@@ -11,6 +11,8 @@ const PokemonForm = () => {
     tipo: '',
     habilidade: '',
     peso: '',
+    altura: '',
+    imagem: ''
   });
 
   useEffect(() => {

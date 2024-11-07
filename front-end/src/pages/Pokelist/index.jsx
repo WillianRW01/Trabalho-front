@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './styles.css';
 import PokemonCard from '../../components/PokemonCard/PokemonCard.jsx';
 import SearchBar from '../../components/SearchBar/SearchBar.jsx';
-import { alterarPokemon, listarPokemons, deletarPokemon } from '../../api/pokemon.jsx';
+import { listarPokemons, deletarPokemon } from '../../api/pokemon.jsx';
 
 const PokemonList = () => {
   const [pokemons, setPokemons] = useState([]);
   const [search, setSearch] = useState('');
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchPokemons = async () => {
@@ -26,6 +27,10 @@ const PokemonList = () => {
     }
   };
 
+  const handleEditPokemon = (id) => {
+    navigate(`/pokemon/edit/${id}`); 
+  };
+
   return (
     <div>
       <center>
@@ -36,16 +41,16 @@ const PokemonList = () => {
       </center>
       <SearchBar search={search} handleSearch={(e) => setSearch(e.target.value)} />
       <div className="pokemon-grid">
-        {pokemons.map((pokemon) => (
-          <PokemonCard
-            key={pokemon.id}
-            pokemon={pokemon}
-            onEdit={() => {
-              window.location.href = `/pokemon/${pokemon.id}`;
-            }}
-            onDelete={handleDeletePokemon}
-          />
-        ))}
+        {pokemons
+          .filter((pokemon) => pokemon.nome.toLowerCase().includes(search.toLowerCase()))
+          .map((pokemon) => (
+            <PokemonCard
+              key={pokemon.id}
+              pokemon={pokemon}
+              onEdit={() => handleEditPokemon(pokemon.id)} 
+              onDelete={handleDeletePokemon}
+            />
+          ))}
       </div>
     </div>
   );
