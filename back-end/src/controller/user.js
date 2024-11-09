@@ -72,7 +72,7 @@ class UserController {
         }
     
         return jwt.sign(
-            { id: userLogged.id, email: userLogged.email },
+            { id: userLogged.id, email: userLogged.email, role:userLogged.role },
             'MeuSegredo123!',
             { expiresIn: 60 * 60}
         );

@@ -42,13 +42,13 @@ class PokemonController {
   }
   
   async listarPokemons(page = 1) {
-    const limit = 70;
+    const limit = 150;
     const offset = (page - 1) * limit;
     const { count, rows: pokemons } = await Pokemon.findAndCountAll({ limit, offset });
 
     if (pokemons.length === 0) {
       let hasMore = true;
-      let currentPage = 1;
+      let currentPage = 3;
 
       while (hasMore) {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=${(currentPage - 1) * limit}&limit=${limit}`);
@@ -57,7 +57,7 @@ class PokemonController {
         }
 
         const data = await response.json();
-        if (!data.next || currentPage >=4) {
+        if (!data.next || currentPage >=5) {
           hasMore = false;
         }
 
