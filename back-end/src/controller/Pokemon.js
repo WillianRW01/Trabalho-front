@@ -42,7 +42,7 @@ class PokemonController {
   }
   
   async listarPokemons(page = 1) {
-    const limit = 150;
+    const limit = 35;
     const offset = (page - 1) * limit;
     const { count, rows: pokemons } = await Pokemon.findAndCountAll({ limit, offset });
 
@@ -57,7 +57,7 @@ class PokemonController {
         }
 
         const data = await response.json();
-        if (!data.next || currentPage >=5) {
+        if (!data.next || currentPage >=3) {
           hasMore = false;
         }
 
@@ -65,10 +65,10 @@ class PokemonController {
           const pokemonDetails = await fetch(poke.url).then(res => res.json());
 
           await Pokemon.create({
-            nome: pokemonDetails.name,
-            tipo: pokemonDetails.types.map(t => t.type.name).join(', '),
-            habilidade: pokemonDetails.abilities.map(a => a.ability.name).join(', '),
-            peso: pokemonDetails.weight,
+            nome: pokemonDetails.nome,
+            tipo: pokemonDetails.tipo.map(t => t.type.name).join(', '),
+            habilidade: pokemonDetails.habilidade.map(a => a.ability.name).join(', '),
+            peso: pokemonDetails.imagem,
             imagem: pokemonDetails.sprites.front_default,
           });
         }
