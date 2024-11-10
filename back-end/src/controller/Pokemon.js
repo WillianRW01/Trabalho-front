@@ -57,7 +57,7 @@ class PokemonController {
         }
 
         const data = await response.json();
-        if (!data.next || currentPage >=3) {
+        if (!data.next || currentPage >=4) {
           hasMore = false;
         }
 
@@ -65,10 +65,10 @@ class PokemonController {
           const pokemonDetails = await fetch(poke.url).then(res => res.json());
 
           await Pokemon.create({
-            nome: pokemonDetails.nome,
-            tipo: pokemonDetails.tipo.map(t => t.type.name).join(', '),
-            habilidade: pokemonDetails.habilidade.map(a => a.ability.name).join(', '),
-            peso: pokemonDetails.imagem,
+            nome: pokemonDetails.name,
+            tipo: pokemonDetails.types.map(t => t.type.name).join(', '),
+            habilidade: pokemonDetails.abilities.map(a => a.ability.name).join(', '),
+            peso: pokemonDetails.weight,
             imagem: pokemonDetails.sprites.front_default,
           });
         }
