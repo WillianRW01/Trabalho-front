@@ -1,48 +1,54 @@
 const Pokemon = require('../model/pokemon');
 
 class PokemonController {
-  async criarPokemon(nome, tipo, habilidade, peso) {
+  async criarPokemon(nome, tipo, habilidade, peso, imagem) {
     if (!nome || !tipo || !habilidade || !peso) {
       throw new Error('Todos os campos (nome, tipo, habilidade, peso) são obrigatórios');
     }
-
-    const novoPokemon = await Pokemon.create({ nome, tipo, habilidade, peso });
+  
+    const novoPokemon = await Pokemon.create({ nome, tipo, habilidade, peso, imagem });
     return novoPokemon;
   }
-
   async buscarPorId(id) {
+
     if (!id) {
       throw new Error('ID é obrigatório');
     }
-
+  
+    
     let pokemon = await Pokemon.findByPk(id);
    
+  
     if (!pokemon) {
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+      
       if (!response.ok) {
         throw new Error('Pokémon não encontrado');
       }
+      
       const data = await response.json();
-
+  
       pokemon = await Pokemon.create({
-        nome: data.name,
-        tipo: data.types.map(t => t.type.name).join(', '),
-        habilidade: data.abilities.map(a => a.ability.name).join(', '),
+        nome: data.name, 
+        tipo: data.types.map(t => t.type.name).join(', '), 
+        habilidade: data.abilities.map(a => a.ability.name).join(', '), 
         peso: data.weight,
+        imagem: data.sprites.front_default,
       });
     }
-
+  
+ 
     return pokemon;
   }
-
+  
   async listarPokemons(page = 1) {
-    const limit = 20;
+    const limit = 35;
     const offset = (page - 1) * limit;
     const { count, rows: pokemons } = await Pokemon.findAndCountAll({ limit, offset });
 
     if (pokemons.length === 0) {
       let hasMore = true;
-      let currentPage = 1;
+      let currentPage = 3;
 
       while (hasMore) {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon?offset=${(currentPage - 1) * limit}&limit=${limit}`);
@@ -51,7 +57,7 @@ class PokemonController {
         }
 
         const data = await response.json();
-        if (!data.next) {
+        if (!data.next || currentPage >=4) {
           hasMore = false;
         }
 
@@ -63,6 +69,7 @@ class PokemonController {
             tipo: pokemonDetails.types.map(t => t.type.name).join(', '),
             habilidade: pokemonDetails.abilities.map(a => a.ability.name).join(', '),
             peso: pokemonDetails.weight,
+            imagem: pokemonDetails.sprites.front_default,
           });
         }
 

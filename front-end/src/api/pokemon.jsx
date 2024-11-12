@@ -14,7 +14,7 @@ export const deletarPokemon = async (id) => {
   await api.delete(`api/v1/pokemon/${id}`);
 };
 
-export const buscarPokemonPorId = async (id) => {
+export const listarPokemonPorId = async (id) => {
   const response = await api.get(`api/v1/pokemon/${id}`);
   return response.data;
 };
