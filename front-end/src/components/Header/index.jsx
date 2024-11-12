@@ -2,17 +2,14 @@ import { Link } from 'react-router-dom'
 import './styles.css'
 import { AuthContext } from '../../auth/Context';
 import { useContext } from 'react';
+import LogoutButton from '../Logout';
  
 export default function Header() {
     const { token } = useContext(AuthContext)
     const isLoginRoute = location.pathname === '/login';
     return (
         <header id="cabecalho">
-             {
-                    !isLoginRoute && !token
-                        ? <Link to="/login">Entrar</Link>
-                        : null
-                }
+                 { token && <LogoutButton />} 
             <h1 className='textTitle'>Projeto Pokedex - API</h1>
             <nav>
                 <ul>
