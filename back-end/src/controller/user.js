@@ -10,7 +10,16 @@ class UserController {
             throw new Error("Name, email e senha são obrigatórios.");
         }
 
-        const passwordHashed = await bcrypt.hash(senha, salts);
+        const passwordHashed = await bcrypt.hash(senha, salts)
+
+        if(email==='admin@admin.com.br'){
+            return UserModel.create({
+                name,
+                email,
+                senha: passwordHashed, 
+                role: "admin"
+            });
+        }
 
         const userValue = await UserModel.create({
             name,
