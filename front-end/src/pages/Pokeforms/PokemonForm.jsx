@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom'; 
 import { criarPokemon, alterarPokemon, listarPokemonPorId } from '../../api/pokemon.jsx';
 import './styles.css'; 
 
 const PokemonForm = () => {
   const { id } = useParams(); 
+  const navigate = useNavigate()
   
   const [pokemon, setPokemon] = useState({
     nome: '',
@@ -40,6 +41,7 @@ const PokemonForm = () => {
         await criarPokemon(pokemon);
         alert('Pokémon criado com sucesso!');
       }
+      navigate('/pokedex');
     } catch (error) {
       console.error('Erro ao salvar Pokémon:', error);
     }

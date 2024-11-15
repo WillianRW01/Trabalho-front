@@ -3,17 +3,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import './styles.css';
 import PokemonCard from '../../components/PokemonCard/PokemonCard.jsx';
 import SearchBar from '../../components/SearchBar/SearchBar.jsx';
-import Pagination from '../../components/Pagination/Pagination.jsx';
 import { listarPokemons, deletarPokemon } from '../../api/pokemon.jsx';
 import { AuthContext } from '../../auth/Context'; 
 
 const PokemonList = () => {
   const [pokemons, setPokemons] = useState([]);
   const [search, setSearch] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 25;
+  const [typeFilter, setTypeFilter] = useState('');
   const navigate = useNavigate();
-  const { role } = useContext(AuthContext); 
+  const { role } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchPokemons = async () => {
@@ -36,16 +34,14 @@ const PokemonList = () => {
     navigate(`/pokemon/edit/${id}`);
   };
 
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-  };
-
-  const filteredPokemons = pokemons.filter((pokemon) =>
-    pokemon.nome.toLowerCase().includes(search.toLowerCase())
+  const filteredPokemons = pokemons.filter((pokemon) => 
+    pokemon.nome.toLowerCase().includes(search.toLowerCase()) &&
+    (typeFilter === '' || pokemon.tipo.includes(typeFilter))
   );
-  const totalPages = Math.ceil(filteredPokemons.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedPokemons = filteredPokemons.slice(startIndex, startIndex + itemsPerPage);
+
+  const handleFilterByType = (type) => {
+    setTypeFilter(typeFilter === type ? '' : type);
+  };
 
   return (
     <div>
@@ -57,24 +53,23 @@ const PokemonList = () => {
           </Link>
         )}
       </center>
+
       <SearchBar search={search} handleSearch={(e) => setSearch(e.target.value)} />
+
       <div className="pokemon-grid">
-        {paginatedPokemons.map((pokemon) => (
+        {filteredPokemons.map((pokemon) => (
           <PokemonCard
             key={pokemon.id}
             pokemon={pokemon}
-            onEdit={role === 'admin' ? () => handleEditPokemon(pokemon.id) : null} 
-            onDelete={role === 'admin' ? handleDeletePokemon : null} 
+            onEdit={role === 'admin' ? () => handleEditPokemon(pokemon.id) : null}
+            onDelete={role === 'admin' ? handleDeletePokemon : null}
+            onFilterByType={handleFilterByType}
           />
         ))}
       </div>
-      <Pagination 
-        currentPage={currentPage} 
-        totalPages={totalPages} 
-        onPageChange={handlePageChange} 
-      />
     </div>
   );
 };
+
 
 export default PokemonList;
