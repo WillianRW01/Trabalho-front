@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { deleteUser, updateUser } from '../../api/user';
 
 export default function Profile() {
-  const { user } = useContext(AuthContext); // Adjusted for context usage
+  const { user } = useContext(AuthContext); 
   const [id, setId] = useState('');
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');

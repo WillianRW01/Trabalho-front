@@ -2,11 +2,11 @@ import React, { useContext } from 'react';
 import './PokemonCard.css';
 import { AuthContext } from '../../auth/Context';
 import typeColors from '../../utils/typeColors';
- 
-const PokemonCard = ({ pokemon, onEdit, onDelete }) => {
+
+const PokemonCard = ({ pokemon, onEdit, onDelete, onFilterByType }) => {
   const { role } = useContext(AuthContext);
   const backgroundColor = typeColors[pokemon.tipo.split(', ')[0].toLowerCase()] || '#fff';
- 
+
   return (
     <div className="pokemon-card" style={{ backgroundColor }}>
       <img src={pokemon.imagem} alt={pokemon.nome} className="pokemon-image" />
@@ -14,25 +14,24 @@ const PokemonCard = ({ pokemon, onEdit, onDelete }) => {
       <p>Tipos: {pokemon.tipo}</p>
       <p>Habilidades: {pokemon.habilidade}</p>
       <p>Peso: {pokemon.peso}</p>
-      {role === 'admin' && (
+
+      <div className="button-container">
+        {role === 'admin' && (
+          <>
+            <button style={{ backgroundColor }} onClick={() => onEdit(pokemon.id)}>Editar</button>
+            <button style={{ backgroundColor }} onClick={() => onDelete(pokemon.id)}>Excluir</button>
+          </>
+        )}
         <button
-          onClick={() => onEdit(pokemon.id)}
-          style={{ backgroundColor, color: '#fff' }}
+          className="filter-button"
+          style={{ backgroundColor }}
+          onClick={() => onFilterByType(pokemon.tipo.split(', ')[0])}
         >
-          Editar
+          Filtrar por {pokemon.tipo.split(', ')[0]}
         </button>
-      )}
-      {role === 'admin' && (
-        <button
-          onClick={() => onDelete(pokemon.id)}
-          style={{ backgroundColor, color: '#fff' }}
-        >
-          Excluir
-        </button>
-      )}
+      </div>
     </div>
   );
 };
- 
+
 export default PokemonCard;
- 
