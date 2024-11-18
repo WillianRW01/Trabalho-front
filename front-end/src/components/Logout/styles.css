@@ -1,66 +1,33 @@
-html,
-body {
-    margin: 0;
-    height: 100%;
-    font-family: Arial, sans-serif;
-}
-
-#cadastropage {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #f0f2f5;
-}
-
-.login-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-}
-
-h1 {
-    font-family: Arial, sans-serif;
-    color: #bb0000;
-    margin-bottom: 20px;
-}
-
-.login-form {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    display: flex;
-    flex-direction: column;
-}
-
-.login-form label {
-    margin-bottom: 8px;
-    font-weight: bold;
-}
-
-.login-form input {
-    margin-bottom: 16px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-}
-
-.login-button {
-    padding: 10px;
+.logout-button {
+    margin-left: 20px;
+    margin-top: 21px;
+    padding: 6px 12px;         /* Menor padding (altura e largura do botão) */
+    font-size: 14px;           /* Menor tamanho da fonte */
     border: none;
     border-radius: 4px;
-    background-color: #d33d3d;
-    color: #fff;
-    font-size: 16px;
+    background-color: #ffffff; /* Cor vermelha suave */
+    color: #bb0000;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.2s;
+    height: 36px;              /* Ajuste para a altura do botão */
+    width: 80px;           /* Largura mínima para manter o botão razoavelmente largo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15 15px;            /* Espaço entre o botão e outros itens na navbar */
 }
 
-.login-button:hover {
-    background-color: #720000;
+.logout-button:hover {
+    background-color: #ffffff; /* Cor mais escura ao passar o mouse */
+    transform: translateY(-2px); /* Sutil efeito de elevação */
+}
+
+.logout-button:active {
+    background-color: #bb0000; /* Cor mais escura ao pressionar */
+    transform: translateY(2px);  /* Efeito de pressionamento */
+}
+
+.logout-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(234, 88, 88, 0.6); /* Efeito de foco */
 }
