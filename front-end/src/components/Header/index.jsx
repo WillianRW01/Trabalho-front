@@ -9,7 +9,6 @@ export default function Header() {
 
     return (
         <header id="cabecalho">
-            {token && <LogoutButton />}
             <h1 className='textTitle'>Projeto Pokedex - API</h1>
             <nav>
                 <ul>
@@ -21,6 +20,7 @@ export default function Header() {
                     {token && <li><Link to="/itens">Itens</Link></li>}
                     {token && <li><Link to="/pokedex">Pokedex</Link></li>}
                     {token && <li><Link to="/perfil">Perfil</Link></li>}
+                    {token && <LogoutButton />}
                 </ul>
             </nav>
         </header>
