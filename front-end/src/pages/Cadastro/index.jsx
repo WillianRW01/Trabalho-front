@@ -70,7 +70,8 @@ export default function Cadastrar(){
                     />
     
                     <button type="submit " onClick={handleSubmit} className="login-button">Cadastrar</button>
-                    <button className="button back-button" onClick={handleBackClick}></button>
+                    <br></br>
+                    <button className="button back-button" onClick={handleBackClick}>Cancelar</button>
                 </form>
             </div>
         );
