@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { createUserAdmin } from '../../api/user';
+import { AuthContext } from '../../auth/Context';
 
 
 export default function AdminForm() {
@@ -7,6 +8,7 @@ export default function AdminForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);  // Para determinar se é admin
+  const { role } = useContext(AuthContext);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -44,7 +46,7 @@ export default function AdminForm() {
             required
           />
         </div>
-        
+
         <div>
           <label htmlFor="email">Email:</label>
           <input
