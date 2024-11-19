@@ -5,10 +5,11 @@ const authMiddleware = require('../Middleware/auth');
 const useRouter = express.Router();
  
 useRouter.get('/', authMiddleware(['admin', 'viewer']), UserApi.findUser);
+useRouter.get('/context',UserApi.findContext);
  
 useRouter.post('/admin', authMiddleware(['admin']), UserApi.createUserAdmin);
  
-useRouter.put('/', authMiddleware(), UserApi.updateUser);
+useRouter.put('/:id', authMiddleware(), UserApi.updateUser);
 useRouter.put('/admin/:id', authMiddleware(['admin']), UserApi.updateUserAdmin);
  
 useRouter.delete('/:id', authMiddleware(), UserApi.deleteUser);

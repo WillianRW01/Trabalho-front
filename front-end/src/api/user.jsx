@@ -33,6 +33,11 @@ export const getUserByid = async (id) => {
   return response.data;
 };
 
+export const getContext = async () => {
+  const response = await api.get(`/api/v1/user/context`);
+  return response.data;
+};
+
 export const getUsers = async () => {
   const response = await api.get('api/v1/user/');
   return response.data;

@@ -53,14 +53,15 @@ class UserController {
         return updatedUser;
     }
 
-    async deleteUser(id) {
-        const user = await UserModel.findByIdAndDelete(id);
-        if (!user) {
-            throw new Error("Usuário não encontrado.");
+    async delete(id) {
+        if (id === undefined) {
+          throw new Error("Id é obrigatório.");
         }
-        return user;
-    }
-
+        const userValue = await this.findUser(id);
+        userValue.destroy();
+    
+        return;
+      }
 
     async findAll() {
         return UserModel.findAll();
