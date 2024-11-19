@@ -18,6 +18,10 @@ const Pokemon = database.db.define("Pokemon", {
     type: DataTypes.FLOAT,
     allowNull: false,
   },
+  imagem: {
+    type: DataTypes.STRING,  
+    allowNull: true,
+  },
 });
  
 module.exports = Pokemon;

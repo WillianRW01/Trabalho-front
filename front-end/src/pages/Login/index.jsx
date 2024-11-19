@@ -5,6 +5,7 @@ import { AuthContext } from '../../auth/Context';
 import { loginUser } from '../../api/user';
 
 export default function Login() {
+  const { token } = useContext(AuthContext)
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -32,6 +33,8 @@ export default function Login() {
         if (response.token) {
             // 8 - Adicionar login ao AuthContext
             login(response.token);
+            
+            console.log(token)
             return navigate('/');
         }
     } catch (error) {

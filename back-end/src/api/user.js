@@ -11,6 +11,16 @@ class UserApi {
             res.status(400).send('Deu erro');
         }
     }
+    
+    async findContext(req,res){
+        try {
+           const user = await UserController.findUser(req?.session?.id || 0)
+           return res.status(200).send(user)
+        } catch (e) {
+            return res.status(400).send({error: `Erro Ao listar usuário ${e.message}`})
+            
+        }
+    }
 
     async createUser(req, res) {
         const { name, email, senha } = req.body;
@@ -27,9 +37,9 @@ class UserApi {
     async updateUser(req, res) {
         const id  = req.params.id || req.session.id;
         console.log(id)
-        const { nome, email, senha } = req.body;
+        const { name, email, senha } = req.body;
         try {
-            await UserController.updateUser(id, { nome, email, senha }); 
+            await UserController.updateUser(id, { name, email, senha }); 
             res.send('Usuario alterado com sucesso!');
         } catch (e) {
             console.log(e);
@@ -40,7 +50,7 @@ class UserApi {
     async deleteUser(req, res) {
         const { id } = req.params;
         try {
-            await UserController.deleteUser(id);
+            await UserController.delete(id);
             res.send('Usuario deletado com sucesso!');
         } catch (e) {
             console.log(e);
@@ -49,9 +59,9 @@ class UserApi {
     }
 
     async createUserAdmin(req, res) {
-        const { nome, email, senha } = req.body;
+        const { name, email, password } = req.body;
         try {
-            await UserController.createUser(nome, email, senha, 'admin'); 
+            await UserController.createUser(name, email, password, 'admin'); 
             res.send('Usuario admin criado com sucesso!');
         } catch (e) {
             console.log(e);
@@ -61,9 +71,9 @@ class UserApi {
 
     async updateUserAdmin(req, res) {
         const id  = req.params.id || req.session.id;
-        const { nome, email, senha } = req.body;
+        const { name, email, password } = req.body;
         try {
-            await UserController.updateUser(id, { nome, email, senha }); 
+            await UserController.updateUser(id, { name, email, password }); 
             res.send('Usuario Admin alterado com sucesso!');
         } catch (e) {
             console.log(e);

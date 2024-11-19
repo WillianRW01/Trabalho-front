@@ -10,7 +10,16 @@ class UserController {
             throw new Error("Name, email e senha são obrigatórios.");
         }
 
-        const passwordHashed = await bcrypt.hash(senha, salts);
+        const passwordHashed = await bcrypt.hash(senha, salts)
+
+        if(email==='admin@admin.com.br'){
+            return UserModel.create({
+                name,
+                email,
+                senha: passwordHashed, 
+                role: "admin"
+            });
+        }
 
         const userValue = await UserModel.create({
             name,
@@ -44,14 +53,15 @@ class UserController {
         return updatedUser;
     }
 
-    async deleteUser(id) {
-        const user = await UserModel.findByIdAndDelete(id);
-        if (!user) {
-            throw new Error("Usuário não encontrado.");
+    async delete(id) {
+        if (id === undefined) {
+          throw new Error("Id é obrigatório.");
         }
-        return user;
-    }
-
+        const userValue = await this.findUser(id);
+        userValue.destroy();
+    
+        return;
+      }
 
     async findAll() {
         return UserModel.findAll();
@@ -72,8 +82,9 @@ class UserController {
         }
     
         return jwt.sign(
-            { id: userLogged.id, email: userLogged.email },
-            'MeuSegredo123!'
+            { id: userLogged.id, email: userLogged.email, role:userLogged.role },
+            'MeuSegredo123!',
+            { expiresIn: 60 * 60}
         );
     }
     async BloquearUser(id){

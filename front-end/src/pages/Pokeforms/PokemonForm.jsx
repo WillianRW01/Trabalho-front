@@ -1,29 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { criarPokemon, alterarPokemon } from '../../api/pokemon.jsx';
-import './styles.css'; // Importando o CSS
+import { useParams, useNavigate } from 'react-router-dom'; 
+import { criarPokemon, alterarPokemon, listarPokemonPorId } from '../../api/pokemon.jsx';
+import './styles.css'; 
 
 const PokemonForm = () => {
-  const { id } = useParams(); // Para saber se estamos editando ou criando
-  const history = useHistory();
-
+  const { id } = useParams(); 
+  const navigate = useNavigate()
+  
   const [pokemon, setPokemon] = useState({
-    name: '',
-    types: [],
-    abilities: [],
-    height: 0,
-    weight: 0,
-    image: ''
+    nome: '',
+    tipo: '',
+    habilidade: '',
+    peso: '',
+    altura: '',
+    imagem: ''
   });
 
   useEffect(() => {
-    const fetchPokemon = async () => {
+    const buscarPokemon = async () => {
       if (id) {
         const data = await listarPokemonPorId(id);
         setPokemon(data);
       }
     };
-    fetchPokemon();
+    buscarPokemon();
   }, [id]);
 
   const handleChange = (e) => {
@@ -41,7 +41,7 @@ const PokemonForm = () => {
         await criarPokemon(pokemon);
         alert('Pokémon criado com sucesso!');
       }
-      history.push('/'); // Redireciona para a página inicial após criar ou editar
+      navigate('/pokedex');
     } catch (error) {
       console.error('Erro ao salvar Pokémon:', error);
     }
@@ -53,48 +53,48 @@ const PokemonForm = () => {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          name="name"
-          value={pokemon.name}
+          name="nome"
+          value={pokemon.nome}
           onChange={handleChange}
           placeholder="Nome"
           required
         />
         <input
           type="text"
-          name="types"
-          value={pokemon.types.join(', ')}
-          onChange={(e) => handleChange({ target: { name: 'types', value: e.target.value.split(', ') } })}
+          name="tipo"
+          value={pokemon.tipo}
+          onChange={handleChange}
           placeholder="Tipos (separe com vírgula)"
           required
         />
         <input
           type="text"
-          name="abilities"
-          value={pokemon.abilities.join(', ')}
-          onChange={(e) => handleChange({ target: { name: 'abilities', value: e.target.value.split(', ') } })}
+          name="habilidade"
+          value={pokemon.habilidade}
+          onChange={handleChange}
           placeholder="Habilidades (separe com vírgula)"
           required
         />
         <input
           type="number"
-          name="height"
-          value={pokemon.height}
+          name="altura"
+          value={pokemon.altura || ''}
           onChange={handleChange}
           placeholder="Altura"
           required
         />
         <input
           type="number"
-          name="weight"
-          value={pokemon.weight}
+          name="peso"
+          value={pokemon.peso}
           onChange={handleChange}
           placeholder="Peso"
           required
         />
         <input
           type="text"
-          name="image"
-          value={pokemon.image}
+          name="imagem"
+          value={pokemon.imagem || ''}
           onChange={handleChange}
           placeholder="URL da Imagem"
           required

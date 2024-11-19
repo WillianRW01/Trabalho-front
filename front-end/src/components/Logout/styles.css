@@ -1,0 +1,33 @@
+.logout-button {
+    margin-left: 20px;
+    margin-top: 21px;
+    padding: 6px 12px;         /* Menor padding (altura e largura do botão) */
+    font-size: 14px;           /* Menor tamanho da fonte */
+    border: none;
+    border-radius: 4px;
+    background-color: #ffffff; /* Cor vermelha suave */
+    color: #bb0000;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    height: 36px;              /* Ajuste para a altura do botão */
+    width: 80px;           /* Largura mínima para manter o botão razoavelmente largo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15 15px;            /* Espaço entre o botão e outros itens na navbar */
+}
+
+.logout-button:hover {
+    background-color: #ffffff; /* Cor mais escura ao passar o mouse */
+    transform: translateY(-2px); /* Sutil efeito de elevação */
+}
+
+.logout-button:active {
+    background-color: #bb0000; /* Cor mais escura ao pressionar */
+    transform: translateY(2px);  /* Efeito de pressionamento */
+}
+
+.logout-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(234, 88, 88, 0.6); /* Efeito de foco */
+}
