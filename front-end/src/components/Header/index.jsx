@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import LogoutButton from '../Logout';
  
 export default function Header() {
-    const { token } = useContext(AuthContext);
+    const { token, role } = useContext(AuthContext);
 
     return (
         <header id="cabecalho">
@@ -20,7 +20,7 @@ export default function Header() {
                     {token && <li><Link to="/itens">Itens</Link></li>}
                     {token && <li><Link to="/pokedex">Pokedex</Link></li>}
                     {token && <li><Link to="/perfil">Perfil</Link></li>}
-                    {token && <li><Link to="/gerenciamento">Gerenciamento</Link></li>}
+                    {(role == "admin" && token) && <li><Link to="/gerenciamento">Gerenciamento</Link></li>}
                     {token && <LogoutButton />}
                 </ul>
             </nav>
