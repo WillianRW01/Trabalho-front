@@ -20,6 +20,7 @@ export default function Header() {
                     {token && <li><Link to="/itens">Itens</Link></li>}
                     {token && <li><Link to="/pokedex">Pokedex</Link></li>}
                     {token && <li><Link to="/perfil">Perfil</Link></li>}
+                    {token && <li><Link to="/gerenciamento">Gerenciamento</Link></li>}
                     {token && <LogoutButton />}
                 </ul>
             </nav>

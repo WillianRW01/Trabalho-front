@@ -49,9 +49,9 @@ class UserApi {
     }
 
     async createUserAdmin(req, res) {
-        const { nome, email, senha } = req.body;
+        const { name, email, password } = req.body;
         try {
-            await UserController.createUser(nome, email, senha, 'admin'); 
+            await UserController.createUser(name, email, password, 'admin'); 
             res.send('Usuario admin criado com sucesso!');
         } catch (e) {
             console.log(e);
@@ -61,9 +61,9 @@ class UserApi {
 
     async updateUserAdmin(req, res) {
         const id  = req.params.id || req.session.id;
-        const { nome, email, senha } = req.body;
+        const { name, email, password } = req.body;
         try {
-            await UserController.updateUser(id, { nome, email, senha }); 
+            await UserController.updateUser(id, { name, email, password }); 
             res.send('Usuario Admin alterado com sucesso!');
         } catch (e) {
             console.log(e);

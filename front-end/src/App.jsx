@@ -14,6 +14,7 @@ import { AuthProvider } from "./auth/Context";
 import PrivateRoute from "./routes/PrivateRoute";
 import PokemonForm from "./pages/Pokeforms/PokemonForm";
 import PokemonList from "./pages/Pokelist";
+import AdminForm from "./pages/Gerenciamento";
 
 function App() {
     return (
@@ -28,6 +29,7 @@ function App() {
                     <Route path='/pokedex' element={<PokemonList />} />
                     <Route path='/videos' element={<Videos />} />
                     <Route path='/perfil' element={<Perfil />} />
+                    <Route path='/gerenciamento' element={<AdminForm />} />
                     <Route path='/pokemon/new' element={<PokemonForm />} />
                     <Route path='/pokemon/edit/:id' element={<PokemonForm />} /> 
                 </Route>
