@@ -35,7 +35,7 @@ export default function Login() {
             login(response.token);
             
             console.log(token)
-            return navigate('/');
+            return navigate('/about');
         }
     } catch (error) {
         console.log(error)
