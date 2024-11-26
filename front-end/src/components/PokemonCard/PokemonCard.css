@@ -77,7 +77,7 @@
 .pokemon-grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr)); 
-  gap: 15px;
+  gap: 40px;
   margin-top: 20px;
   padding: 20px;
   margin-left: auto;
