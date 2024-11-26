@@ -5,8 +5,7 @@ import { AuthContext } from '../../auth/Context';
 import { loginUser } from '../../api/user';
 
 export default function Login() {
-  const { token } = useContext(AuthContext)
-  const { login } = useContext(AuthContext);
+  const { token,login } = useContext(AuthContext)
   const navigate = useNavigate();
 
   const handleBackClick = () => {

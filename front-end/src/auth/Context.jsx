@@ -34,9 +34,9 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('token', newToken)
     }
     const logout = () => {
-        setToken(null)
-        setRole(null) //função para pegar a role do token
-        localStorage.setItem('token')
+        setToken(null);
+        setRole(null);
+        localStorage.removeItem('token')
     }
 
     useEffect(() => {
