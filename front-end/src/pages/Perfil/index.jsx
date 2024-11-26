@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import './styles.css';
 import { useNavigate } from 'react-router-dom';
 import { deleteUser, getContext, updateUser } from '../../api/user';
+import { AuthContext } from '../../auth/Context';
 
 export default function Profile() {
   const [id, setId] = useState('');
@@ -11,6 +12,7 @@ export default function Profile() {
   const [updEmail, setUpdEmail] = useState('');
   const [isUpdate, setIsUpdate] = useState(false);
   const navigate = useNavigate();
+  const { logout } = useContext(AuthContext); 
 
   async function carregarPerfil() {
     try {
@@ -48,6 +50,7 @@ export default function Profile() {
       if (response === email) {
         const deleteResponse = await deleteUser(id);
         if (deleteResponse) {
+          logout();
           navigate('/');
         }
       } else {
