@@ -26,13 +26,9 @@ export default function Profile() {
   }
 
   const handleSaveUpdate = async () => {
-
     try {
-      const response = await updateUser(id, { name: updNome, email: updEmail });
-      if (response.id) {
-        setNome(updNome);
-        setEmail(updEmail);
-      }
+      await updateUser(id, { name: updNome, email: updEmail });
+      await carregarPerfil(); // Recarrega os dados do perfil da API
     } catch (error) {
       alert('Erro inesperado, tente novamente mais tarde!');
     } finally {
