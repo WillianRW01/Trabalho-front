@@ -13,12 +13,12 @@ class Database {
             password:process.env.DB_PASSWORD,
             username:process.env.DB_USERNAME,
             dialect:process.env.DB_DIALECT,
-            // dialectOptions: {
-            //     ssl:{
-            //         require: true,
-            //         rejectUnauthorized:false
-            //     }
-            // }
+            dialectOptions: {
+                ssl:{
+                    require: true,
+                    rejectUnauthorized:false
+                }
+            }
         })
     }
 }
